@@ -32,6 +32,16 @@ jobs:
           server-username: MAVEN_USERNAME
           server-password: MAVEN_PASSWORD
 
+      - name: Set JobRunrPro credentials
+        uses: s4u/maven-settings-action@v2.8.0
+        with:
+          servers: |
+            [{
+                "id": "JobRunrPro",
+                "username": "axoniq",
+                "password": "${{ secrets.JOB_RUNR_PRO_PASSWORD }}"
+            }]        
+
       - name: Regular Build
         if: ${{ !matrix.sonar-enabled }}
         run: |

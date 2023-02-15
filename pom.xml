@@ -20,7 +20,11 @@
     <groupId>org.axonframework.extensions.jobrunrpro</groupId>
     <artifactId>axon-jobrunrpro-parent</artifactId>
     <version>4.8.0-SNAPSHOT</version>
-
+    <modules>
+        <module>jobrunrpro</module>
+        <module>jobrunrpro-spring-boot-autoconfigure</module>
+        <module>jobrunrpro-spring-boot-starter</module>
+    </modules>
     <packaging>pom</packaging>
 
     <modelVersion>4.0.0</modelVersion>
@@ -65,6 +69,7 @@
         <jackson.version>2.13.4</jackson.version>
         <commons-io.version>2.11.0</commons-io.version>
         <junit.jupiter.version>5.9.1</junit.jupiter.version>
+        <awaitility.version>4.2.0</awaitility.version>
 
         <jacoco-maven-plugin.version>0.8.8</jacoco-maven-plugin.version>
     </properties>
@@ -166,6 +171,16 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter</artifactId>
                 <version>${spring.boot.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-beans</artifactId>
+                <version>${spring.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.awaitility</groupId>
+                <artifactId>awaitility</artifactId>
+                <version>${awaitility.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.junit.jupiter</groupId>
@@ -367,6 +382,57 @@
                     </plugin>
                 </plugins>
             </build>
+        </profile>
+
+        <profile>
+            <id>coverage</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+                <property>
+                    <name>coverage</name>
+                </property>
+            </activation>
+            <modules>
+                <module>coverage-report</module>
+            </modules>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <configuration>
+                            <!--suppress MavenModelInspection -->
+                            <argLine>-Djava.awt.headless=true ${surefireArgLine}</argLine>
+                        </configuration>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.jacoco</groupId>
+                        <artifactId>jacoco-maven-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>prepare-agent-for-unit-tests</id>
+                                <phase>initialize</phase>
+                                <goals>
+                                    <goal>prepare-agent</goal>
+                                </goals>
+                                <configuration>
+                                    <propertyName>surefireArgLine</propertyName>
+                                    <destFile>${project.build.directory}/jacoco-ut.exec</destFile>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>java17-modules</id>
+            <activation>
+                <jdk>[17,)</jdk>
+            </activation>
+            <modules>
+                <module>jobrunrpro-spring-boot-3-integrationtests</module>
+            </modules>
         </profile>
     </profiles>
 
