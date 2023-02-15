@@ -67,7 +67,7 @@
 
         <findbugs-jsr305.version>3.0.2</findbugs-jsr305.version>
 
-        <mockito.version>4.11.0</mockito.version>
+        <mockito.version>5.1.1</mockito.version>
         <jackson.version>2.13.4</jackson.version>
         <commons-io.version>2.11.0</commons-io.version>
         <junit.jupiter.version>5.9.1</junit.jupiter.version>
