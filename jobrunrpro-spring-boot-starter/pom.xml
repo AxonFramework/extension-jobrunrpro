@@ -30,4 +30,17 @@
         <url>https://github.com/AxonFramework/extension-jobrunrpro/issues</url>
     </issueManagement>
 
+    <dependencies>
+        <dependency>
+            <groupId>org.axonframework.extensions.jobrunrpro</groupId>
+            <artifactId>axon-jobrunrpro-spring-boot-autoconfigure</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.axonframework.extensions.jobrunrpro</groupId>
+            <artifactId>axon-jobrunrpro</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+    </dependencies>
+
 </project>

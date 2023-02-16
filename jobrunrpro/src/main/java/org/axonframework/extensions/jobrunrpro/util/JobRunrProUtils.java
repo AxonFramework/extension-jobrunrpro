@@ -39,11 +39,15 @@ public abstract class JobRunrProUtils {
                 .withLabel(label)
                 .withStateName(StateName.SCHEDULED)
                 .build();
-        List<Job> jobs = storageProvider.getJobs(request, ascOnUpdatedAt(1000)).getItems();
+        List<Job> jobs = getFirstThousandJobs(storageProvider, request);
         while (!jobs.isEmpty()) {
             jobs.forEach(job -> jobScheduler.delete(job.getId(), deleteReason));
-            jobs = storageProvider.getJobs(request, ascOnUpdatedAt(1000)).getItems();
+            jobs = getFirstThousandJobs(storageProvider, request);
         }
+    }
+
+    private static List<Job> getFirstThousandJobs(StorageProvider storageProvider, JobSearchRequest request) {
+        return storageProvider.getJobs(request, ascOnUpdatedAt(1000)).getItems();
     }
 
     private JobRunrProUtils() {

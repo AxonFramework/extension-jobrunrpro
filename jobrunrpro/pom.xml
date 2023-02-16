@@ -43,7 +43,6 @@
         <dependency>
             <groupId>org.jobrunr</groupId>
             <artifactId>jobrunr-pro</artifactId>
-            <version>${jobrunr.version}</version>
             <optional>true</optional>
         </dependency>
         <dependency>
@@ -54,7 +53,21 @@
 
         <dependency>
             <groupId>org.axonframework</groupId>
+            <artifactId>axon-configuration</artifactId>
+            <version>${axon.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.axonframework</groupId>
             <artifactId>axon-messaging</artifactId>
+            <version>${axon.version}</version>
+            <type>test-jar</type>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.axonframework</groupId>
+            <artifactId>axon-integrationtests</artifactId>
             <version>${axon.version}</version>
             <type>test-jar</type>
             <scope>test</scope>
@@ -69,6 +82,31 @@
             <artifactId>jackson-datatype-jsr310</artifactId>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-beans</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.awaitility</groupId>
+            <artifactId>awaitility</artifactId>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <configuration>
+                    <archive>
+                        <manifestEntries>
+                            <Automatic-Module-Name>org.axonframework.extensions.jobrunrpro</Automatic-Module-Name>
+                        </manifestEntries>
+                    </archive>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 </project>

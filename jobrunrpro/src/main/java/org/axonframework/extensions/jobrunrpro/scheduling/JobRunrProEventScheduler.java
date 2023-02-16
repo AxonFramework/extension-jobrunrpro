@@ -78,12 +78,6 @@ public class JobRunrProEventScheduler extends JobRunrEventScheduler {
         this.jobName = builder.jobName;
     }
 
-    @Override
-    protected void createJob(JobBuilder job) {
-        JobProId id = jobScheduler.create(job);
-        logger.debug("Job with id: [{}] was successfully created.", id);
-    }
-
     /**
      * Cancels all the events scheduled with the current {@code jobname}. This method has no impact on events which have
      * already been triggered.

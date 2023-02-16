@@ -24,8 +24,6 @@
         <module>jobrunrpro</module>
         <module>jobrunrpro-spring-boot-autoconfigure</module>
         <module>jobrunrpro-spring-boot-starter</module>
-        <module>coverage-report</module>
-        <module>jobrunrpro-spring-boot-3-integrationtests</module>
     </modules>
     <packaging>pom</packaging>
 
@@ -71,6 +69,7 @@
         <jackson.version>2.13.4</jackson.version>
         <commons-io.version>2.11.0</commons-io.version>
         <junit.jupiter.version>5.9.1</junit.jupiter.version>
+        <awaitility.version>4.2.0</awaitility.version>
 
         <jacoco-maven-plugin.version>0.8.8</jacoco-maven-plugin.version>
     </properties>
@@ -172,6 +171,16 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter</artifactId>
                 <version>${spring.boot.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-beans</artifactId>
+                <version>${spring.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.awaitility</groupId>
+                <artifactId>awaitility</artifactId>
+                <version>${awaitility.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.junit.jupiter</groupId>

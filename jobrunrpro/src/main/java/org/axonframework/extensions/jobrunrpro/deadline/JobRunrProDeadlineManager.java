@@ -94,12 +94,6 @@ public class JobRunrProDeadlineManager extends JobRunrDeadlineManager {
     }
 
     @Override
-    protected void createJob(JobBuilder job) {
-        JobProId id = jobScheduler.create(job);
-        logger.debug("Job with id: [{}] was successfully created.", id);
-    }
-
-    @Override
     protected String getSpanClassName() {
         return "JobRunrProDeadlineManager";
     }
