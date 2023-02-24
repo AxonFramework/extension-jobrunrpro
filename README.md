@@ -1,6 +1,6 @@
 # Axon Framework - JobRunr Pro Extension
 
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/org.axonframework.extensions.mongo/axon-jobrunrpro/badge.svg)](https://maven-badges.herokuapp.com/maven-central/org.axonframework.extensions.jobrunrpro/axon-jobrunrpro/)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/org.axonframework.extensions.jobrunrpro/axon-jobrunrpro/badge.svg)](https://maven-badges.herokuapp.com/maven-central/org.axonframework.extensions.jobrunrpro/axon-jobrunrpro/)
 ![Build Status](https://github.com/AxonFramework/extension-jobrunrpro/workflows/JobRunr%20Pro%20Extension/badge.svg?branch=main)
 [![SonarCloud Status](https://sonarcloud.io/api/project_badges/measure?project=AxonFramework_extension-jobrunrpro&metric=alert_status)](https://sonarcloud.io/dashboard?id=AxonFramework_extension-jobrunrpro)
 
