@@ -15,8 +15,8 @@ This set up helps you create a well structured application without having to bot
 The main focus can thus become your business functionality.
 
 This repository provides an extension to the Axon Framework: JobRunr Pro.
-It provides functionality to leverage JobRunr to store and execute jobs. In particular and implementation for both an
-event scheduler and a deadline manager, that allows deleting jobs by their label.
+It provides functionality to leverage JobRunr to store and execute jobs. In particular and implementation for a deadline
+manager, that allows deleting jobs by their label.
 
 For more information on anything Axon, please visit our website, [http://axoniq.io](http://axoniq.io).
 

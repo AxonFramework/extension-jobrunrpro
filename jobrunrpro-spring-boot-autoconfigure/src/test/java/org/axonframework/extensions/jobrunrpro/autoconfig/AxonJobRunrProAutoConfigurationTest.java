@@ -17,9 +17,7 @@
 package org.axonframework.extensions.jobrunrpro.autoconfig;
 
 import org.axonframework.deadline.DeadlineManager;
-import org.axonframework.eventhandling.scheduling.EventScheduler;
 import org.axonframework.extensions.jobrunrpro.deadline.JobRunrProDeadlineManager;
-import org.axonframework.extensions.jobrunrpro.scheduling.JobRunrProEventScheduler;
 import org.jobrunr.scheduling.JobScheduler;
 import org.jobrunr.storage.StorageProvider;
 import org.junit.jupiter.api.*;
@@ -41,9 +39,6 @@ class AxonJobRunrProAutoConfigurationTest {
                 .withPropertyValues("axon.axonserver.enabled=false")
                 .withUserConfiguration(DefaultContext.class)
                 .run(context -> {
-                    EventScheduler eventScheduler = context.getBean(EventScheduler.class);
-                    assertNotNull(eventScheduler);
-                    assertTrue(eventScheduler instanceof JobRunrProEventScheduler);
                     DeadlineManager deadlineManager = context.getBean(DeadlineManager.class);
                     assertNotNull(deadlineManager);
                     assertTrue(deadlineManager instanceof JobRunrProDeadlineManager);
