@@ -27,8 +27,22 @@ import java.util.List;
 import static org.jobrunr.storage.JobSearchRequestBuilder.aJobSearchRequest;
 import static org.jobrunr.storage.PageRequest.ascOnUpdatedAt;
 
+/**
+ * Utility methods specifically for JobRunr Pro
+ *
+ * @author Gerard Klijs
+ * @since 4.8.0
+ */
 public abstract class JobRunrProUtils {
 
+    /**
+     * Will delete the pending jobs, in batches of 1000, with a filter on the given label.
+     *
+     * @param jobScheduler    a {@link JobScheduler} instance
+     * @param storageProvider a {@link StorageProvider} instance
+     * @param label           the {@link String} with the label that should be used to filter on
+     * @param deleteReason    a {@link String} which adds context as to why the job was deleted
+     */
     public static void deleteAllPendingJobsByLabel(
             JobScheduler jobScheduler,
             StorageProvider storageProvider,

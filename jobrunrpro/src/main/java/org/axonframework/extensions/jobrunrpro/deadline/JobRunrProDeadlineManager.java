@@ -140,11 +140,9 @@ public class JobRunrProDeadlineManager extends JobRunrDeadlineManager {
         }
 
         /**
-         * Sets the {@link StorageProvider} used for the cancel all methods. Those will return an error when called
-         * while the storage provider has not been set.
+         * Sets the {@link StorageProvider} used for the cancel all methods.
          *
-         * @param storageProvider a {@link StorageProvider} used for scheduling and triggering purposes of the
-         *                        deadlines
+         * @param storageProvider a {@link StorageProvider} used for finding and canceling pending jobs
          * @return the current Builder instance, for fluent interfacing
          */
         public Builder storageProvider(StorageProvider storageProvider) {
