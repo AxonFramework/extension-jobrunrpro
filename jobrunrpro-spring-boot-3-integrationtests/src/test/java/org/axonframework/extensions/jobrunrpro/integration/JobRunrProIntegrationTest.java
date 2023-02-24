@@ -18,15 +18,10 @@ package org.axonframework.extensions.jobrunrpro.integration;
 
 import org.axonframework.deadline.DeadlineManager;
 import org.axonframework.deadline.TestScopeDescriptor;
-import org.axonframework.eventhandling.EventBus;
-import org.axonframework.eventhandling.scheduling.EventScheduler;
 import org.axonframework.extensions.jobrunrpro.deadline.JobRunrProDeadlineManager;
-import org.axonframework.extensions.jobrunrpro.scheduling.JobRunrProEventScheduler;
-import org.axonframework.messaging.Message;
 import org.axonframework.messaging.ScopeDescriptor;
 import org.jobrunr.jobs.Job;
 import org.jobrunr.jobs.states.StateName;
-import org.jobrunr.scheduling.JobScheduler;
 import org.jobrunr.storage.StorageProvider;
 import org.junit.jupiter.api.*;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -38,13 +33,10 @@ import org.testcontainers.containers.MongoDBContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
-import java.time.Duration;
 import java.time.Instant;
 import java.util.List;
 import java.util.UUID;
-import java.util.concurrent.CopyOnWriteArrayList;
 
-import static org.awaitility.Awaitility.await;
 import static org.junit.jupiter.api.Assertions.*;
 
 @Testcontainers
@@ -54,7 +46,6 @@ public class JobRunrProIntegrationTest {
     private static final MongoDBContainer MONGO_CONTAINER = new MongoDBContainer("mongo:5");
 
     private ApplicationContextRunner testApplicationContext;
-    private List<Message<?>> publishedMessages;
 
     @BeforeEach
     void setUp() {
@@ -70,24 +61,35 @@ public class JobRunrProIntegrationTest {
                         "org.jobrunr.database.type=mongodb"
                 )
                 .withUserConfiguration(DefaultContext.class);
-        publishedMessages = new CopyOnWriteArrayList<>();
     }
 
     @Test
     void messageSendViaDeadlineManagerShouldBeCancelable() {
         testApplicationContext
                 .run(context -> {
-                    context.getBean(JobScheduler.class);
                     DeadlineManager deadlineManager = context.getBean(DeadlineManager.class);
                     assertNotNull(deadlineManager);
                     assertTrue(deadlineManager instanceof JobRunrProDeadlineManager);
                     StorageProvider storageProvider = context.getBean(StorageProvider.class);
                     assertNotNull(storageProvider);
-                    setAndCancelDeadline(deadlineManager, storageProvider);
+                    setAndCancelDeadlineUsingCancelAllWithinScope(deadlineManager, storageProvider);
                 });
     }
 
-    private void setAndCancelDeadline(
+    @Test
+    void allDeadlinesWithTheSameNameShouldBeCancelable() {
+        testApplicationContext
+                .run(context -> {
+                    DeadlineManager deadlineManager = context.getBean(DeadlineManager.class);
+                    assertNotNull(deadlineManager);
+                    assertTrue(deadlineManager instanceof JobRunrProDeadlineManager);
+                    StorageProvider storageProvider = context.getBean(StorageProvider.class);
+                    assertNotNull(storageProvider);
+                    setAndCancelDeadlinesUsingCancelAll(deadlineManager, storageProvider);
+                });
+    }
+
+    private void setAndCancelDeadlineUsingCancelAllWithinScope(
             DeadlineManager deadlineManager,
             StorageProvider storageProvider
     ) {
@@ -106,26 +108,29 @@ public class JobRunrProIntegrationTest {
         assertEquals(StateName.DELETED, job.getState());
     }
 
-    @Test
-    void messageSendViaEventSchedulerShouldBeReceived() {
-        testApplicationContext
-                .run(context -> {
-                    EventBus eventBus = context.getBean(EventBus.class);
-                    eventBus.subscribe(l -> publishedMessages.addAll(l));
-                    context.getBean(JobScheduler.class);
-                    EventScheduler eventScheduler = context.getBean(EventScheduler.class);
-                    assertNotNull(eventScheduler);
-                    assertTrue(eventScheduler instanceof JobRunrProEventScheduler);
-                    eventScheduler.schedule(Instant.now(), "payload");
-                    receiveMessage();
-                });
-    }
-
-    private void receiveMessage() {
-        await().atMost(Duration.ofSeconds(5L)).until(() -> !publishedMessages.isEmpty());
-        Message<?> message = publishedMessages.get(0);
-        assertNotNull(message);
-        assertEquals("payload", message.getPayload());
+    private void setAndCancelDeadlinesUsingCancelAll(
+            DeadlineManager deadlineManager,
+            StorageProvider storageProvider
+    ) {
+        String firstJobId = deadlineManager.schedule(
+                Instant.now().plusSeconds(100L),
+                "some-deadline",
+                "payload",
+                new TestScopeDescriptor("aggregate-type1", "aggregate-identifier1"));
+        String secondJobId = deadlineManager.schedule(
+                Instant.now().plusSeconds(100L),
+                "some-deadline",
+                "payload",
+                new TestScopeDescriptor("aggregate-type2", "aggregate-identifier2"));
+        List<Job> jobs = List.of(storageProvider.getJobById(UUID.fromString(firstJobId)),
+                                 storageProvider.getJobById(UUID.fromString(secondJobId)));
+        jobs.forEach(Assertions::assertNotNull);
+        jobs.forEach(j -> assertEquals(StateName.SCHEDULED, j.getState()));
+        deadlineManager.cancelAll("some-deadline");
+        jobs = List.of(storageProvider.getJobById(UUID.fromString(firstJobId)),
+                       storageProvider.getJobById(UUID.fromString(secondJobId)));
+        jobs.forEach(Assertions::assertNotNull);
+        jobs.forEach(j -> assertEquals(StateName.DELETED, j.getState()));
     }
 
     @ContextConfiguration

@@ -23,7 +23,6 @@ import org.axonframework.deadline.DeadlineManager;
 import org.axonframework.eventhandling.EventBus;
 import org.axonframework.eventhandling.scheduling.EventScheduler;
 import org.axonframework.extensions.jobrunrpro.deadline.JobRunrProDeadlineManager;
-import org.axonframework.extensions.jobrunrpro.scheduling.JobRunrProEventScheduler;
 import org.axonframework.messaging.ScopeAwareProvider;
 import org.axonframework.serialization.Serializer;
 import org.axonframework.springboot.autoconfig.AxonJobRunrAutoConfiguration;
@@ -41,7 +40,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.context.annotation.Bean;
 
 /**
- * Auto configuration class for the deadline manager and event scheduler using JobRunr Pro.
+ * Auto configuration class for the deadline manager using JobRunr Pro.
  *
  * @author Gerard Klijs
  * @since 4.8.0
@@ -52,23 +51,6 @@ import org.springframework.context.annotation.Bean;
 @AutoConfigureAfter(value = {AxonServerAutoConfiguration.class, AxonTracingAutoConfiguration.class},
         name = {"org.jobrunr.spring.autoconfigure.JobRunrAutoConfiguration"})
 public class AxonJobRunrProAutoConfiguration {
-
-    @Bean
-    @ConditionalOnMissingBean
-    public EventScheduler eventScheduler(
-            JobScheduler jobScheduler,
-            StorageProvider storageProvider,
-            @Qualifier("eventSerializer") Serializer serializer,
-            TransactionManager transactionManager,
-            EventBus eventBus) {
-        return JobRunrProEventScheduler.proBuilder()
-                                       .jobScheduler(jobScheduler)
-                                       .storageProvider(storageProvider)
-                                       .serializer(serializer)
-                                       .transactionManager(transactionManager)
-                                       .eventBus(eventBus)
-                                       .build();
-    }
 
     @Bean
     @ConditionalOnMissingBean

@@ -29,11 +29,8 @@ import org.axonframework.serialization.Serializer;
 import org.axonframework.tracing.NoOpSpanFactory;
 import org.axonframework.tracing.Span;
 import org.axonframework.tracing.SpanFactory;
-import org.jobrunr.scheduling.JobBuilder;
-import org.jobrunr.scheduling.JobProId;
 import org.jobrunr.scheduling.JobScheduler;
 import org.jobrunr.storage.StorageProvider;
-import org.slf4j.Logger;
 
 import javax.annotation.Nonnull;
 
@@ -41,7 +38,6 @@ import static org.axonframework.common.BuilderUtils.assertNonNull;
 import static org.axonframework.deadline.jobrunr.LabelUtils.getCombinedLabel;
 import static org.axonframework.deadline.jobrunr.LabelUtils.getLabel;
 import static org.axonframework.extensions.jobrunrpro.util.JobRunrProUtils.deleteAllPendingJobsByLabel;
-import static org.slf4j.LoggerFactory.getLogger;
 
 /**
  * Implementation of {@link DeadlineManager} that delegates scheduling and triggering to a JobRunrPro
@@ -52,8 +48,6 @@ import static org.slf4j.LoggerFactory.getLogger;
  * @since 4.8.0
  */
 public class JobRunrProDeadlineManager extends JobRunrDeadlineManager {
-
-    private static final Logger logger = getLogger(JobRunrProDeadlineManager.class);
     protected final JobScheduler jobScheduler;
     private final StorageProvider storageProvider;
     private final Serializer serializer;

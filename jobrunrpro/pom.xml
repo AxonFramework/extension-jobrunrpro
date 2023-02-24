@@ -29,7 +29,7 @@
 
     <name>Axon Framework JobRunr Pro Extension</name>
     <description>
-        Module containing Deadline Manager and Event Scheduler implementations using JobRunr Pro.
+        Module containing Deadline Manager using JobRunr Pro.
     </description>
 
     <packaging>jar</packaging>
