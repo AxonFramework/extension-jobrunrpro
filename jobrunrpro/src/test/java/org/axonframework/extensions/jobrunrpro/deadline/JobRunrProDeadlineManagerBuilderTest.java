@@ -76,7 +76,7 @@ class JobRunrProDeadlineManagerBuilderTest {
     }
 
     @Test
-    void whenSettingstorageProviderWithNullThrowError() {
+    void whenSettingStorageProviderWithNullThrowError() {
         assertThrows(AxonConfigurationException.class, () -> builder.storageProvider(null));
     }
 
