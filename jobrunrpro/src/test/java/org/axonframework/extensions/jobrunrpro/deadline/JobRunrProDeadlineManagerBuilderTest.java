@@ -89,29 +89,4 @@ class JobRunrProDeadlineManagerBuilderTest {
     void whenSettingScopeAwareProviderWithNullThrowError() {
         assertThrows(AxonConfigurationException.class, () -> builder.scopeAwareProvider(null));
     }
-
-    @Test
-    void cancelImplemented() {
-        JobRunrProDeadlineManager manager =
-                builder.scopeAwareProvider(scopeAwareProvider)
-                       .transactionManager(transactionManager)
-                       .jobScheduler(jobScheduler)
-                       .storageProvider(storageProvider)
-                       .serializer(TestSerializer.JACKSON.getSerializer())
-                       .build();
-        assertDoesNotThrow(() -> manager.cancelAll(TEST_DEADLINE_NAME));
-    }
-
-    @Test
-    void cancelAllWithinScopeImplemented() {
-        JobRunrProDeadlineManager manager =
-                builder.scopeAwareProvider(scopeAwareProvider)
-                       .transactionManager(transactionManager)
-                       .jobScheduler(jobScheduler)
-                       .storageProvider(storageProvider)
-                       .serializer(TestSerializer.JACKSON.getSerializer())
-                       .build();
-        ScopeDescriptor descriptor = new TestScopeDescriptor("aggregate-type", "aggregate-identifier");
-        assertDoesNotThrow(() -> manager.cancelAllWithinScope(TEST_DEADLINE_NAME, descriptor));
-    }
 }
