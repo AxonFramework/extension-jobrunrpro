@@ -18,14 +18,9 @@ package org.axonframework.extensions.jobrunrpro.deadline;
 
 import org.axonframework.common.AxonConfigurationException;
 import org.axonframework.common.transaction.TransactionManager;
-import org.axonframework.deadline.TestScopeDescriptor;
 import org.axonframework.messaging.ScopeAwareProvider;
-import org.axonframework.messaging.ScopeDescriptor;
 import org.axonframework.serialization.TestSerializer;
 import org.jobrunr.scheduling.JobScheduler;
-import org.jobrunr.storage.JobSearchRequest;
-import org.jobrunr.storage.Page;
-import org.jobrunr.storage.PageRequest;
 import org.jobrunr.storage.StorageProvider;
 import org.junit.jupiter.api.*;
 
@@ -33,8 +28,6 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 class JobRunrProDeadlineManagerBuilderTest {
-
-    private static final String TEST_DEADLINE_NAME = "deadline-name";
     private JobRunrProDeadlineManager.Builder builder;
     private final JobScheduler jobScheduler = mock(JobScheduler.class);
 
@@ -42,12 +35,9 @@ class JobRunrProDeadlineManagerBuilderTest {
     private final TransactionManager transactionManager = mock(TransactionManager.class);
     private final ScopeAwareProvider scopeAwareProvider = mock(ScopeAwareProvider.class);
 
-    private final Page<?> page = mock(Page.class);
-
     @BeforeEach
     void newBuilder() {
         builder = JobRunrProDeadlineManager.proBuilder();
-        doReturn(page).when(storageProvider).getJobs(any(JobSearchRequest.class), any(PageRequest.class));
     }
 
     @Test
