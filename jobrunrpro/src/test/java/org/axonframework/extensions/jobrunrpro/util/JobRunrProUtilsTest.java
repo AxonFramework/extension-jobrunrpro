@@ -93,19 +93,21 @@ class JobRunrProUtilsTest {
                                           .withDetails(() -> actionHandler.add())
                                           .scheduleAt(Instant.now());
         JobId id = scheduler.create(jobBuilder);
-        await().atMost(Duration.ofSeconds(10L)).until(() -> actionHandler.currentValue() == 1);
+        await().atMost(Duration.ofSeconds(10L)).untilAsserted(() -> jobSucceeded(id));
+        assertEquals(1, actionHandler.currentValue());
+        JobRunrProUtils.deleteAllPendingJobsByLabel(scheduler, storageProvider, label, reason);
         Job job = storageProvider.getJobById(id);
         assertNotNull(job);
         assertEquals(StateName.SUCCEEDED, job.getState());
-        int statesBeforeDelete = job.getJobStates().size();
-        JobRunrProUtils.deleteAllPendingJobsByLabel(scheduler, storageProvider, label, reason);
-        job = storageProvider.getJobById(id);
-        assertNotNull(job);
-        assertEquals(StateName.SUCCEEDED, job.getState());
-        assertEquals(statesBeforeDelete, job.getJobStates().size());
     }
 
-    private class ActionHandler {
+    void jobSucceeded(JobId id) {
+        Job job = storageProvider.getJobById(id);
+        assertNotNull(job);
+        assertEquals(StateName.SUCCEEDED, job.getState());
+    }
+
+    private static class ActionHandler {
 
         private final AtomicInteger counter = new AtomicInteger(0);
 
