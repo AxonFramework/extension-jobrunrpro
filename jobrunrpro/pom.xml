@@ -67,7 +67,7 @@
 
         <dependency>
             <groupId>org.axonframework</groupId>
-            <artifactId>axon-integrationtests</artifactId>
+            <artifactId>axon-spring</artifactId>
             <version>${axon.version}</version>
             <type>test-jar</type>
             <scope>test</scope>

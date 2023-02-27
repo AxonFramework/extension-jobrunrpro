@@ -16,7 +16,6 @@
 
 package org.axonframework.extensions.jobrunrpro.util;
 
-import org.axonframework.integrationtests.deadline.jobrunr.SimpleActivator;
 import org.jobrunr.configuration.JobRunrPro;
 import org.jobrunr.jobs.Job;
 import org.jobrunr.jobs.JobId;

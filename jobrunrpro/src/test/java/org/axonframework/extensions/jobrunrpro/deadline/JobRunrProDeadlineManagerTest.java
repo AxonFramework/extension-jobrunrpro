@@ -22,6 +22,9 @@ import org.axonframework.messaging.ScopeAwareProvider;
 import org.axonframework.messaging.ScopeDescriptor;
 import org.axonframework.serialization.TestSerializer;
 import org.jobrunr.scheduling.JobScheduler;
+import org.jobrunr.storage.JobSearchRequest;
+import org.jobrunr.storage.Page;
+import org.jobrunr.storage.PageRequest;
 import org.jobrunr.storage.StorageProvider;
 import org.junit.jupiter.api.*;
 
@@ -36,6 +39,12 @@ public class JobRunrProDeadlineManagerTest {
     private final StorageProvider storageProvider = mock(StorageProvider.class);
     private final TransactionManager transactionManager = mock(TransactionManager.class);
     private final ScopeAwareProvider scopeAwareProvider = mock(ScopeAwareProvider.class);
+    private final Page<?> page = mock(Page.class);
+
+    @BeforeEach
+    void newBuilder() {
+        doReturn(page).when(storageProvider).getJobs(any(JobSearchRequest.class), any(PageRequest.class));
+    }
 
     @Test
     void cancelImplemented() {
