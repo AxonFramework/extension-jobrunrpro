@@ -31,7 +31,7 @@ import org.junit.jupiter.api.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-public class JobRunrProDeadlineManagerTest {
+class JobRunrProDeadlineManagerTest {
 
     private static final String TEST_DEADLINE_NAME = "deadline-name";
     private final JobScheduler jobScheduler = mock(JobScheduler.class);

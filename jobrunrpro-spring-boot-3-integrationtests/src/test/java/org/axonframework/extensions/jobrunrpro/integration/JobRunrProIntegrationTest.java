@@ -40,7 +40,7 @@ import java.util.UUID;
 import static org.junit.jupiter.api.Assertions.*;
 
 @Testcontainers
-public class JobRunrProIntegrationTest {
+class JobRunrProIntegrationTest {
 
     @Container
     private static final MongoDBContainer MONGO_CONTAINER = new MongoDBContainer("mongo:5");
