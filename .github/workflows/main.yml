@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - axon-jobrunrpro-*.*.x
 
 jobs:
   build:
