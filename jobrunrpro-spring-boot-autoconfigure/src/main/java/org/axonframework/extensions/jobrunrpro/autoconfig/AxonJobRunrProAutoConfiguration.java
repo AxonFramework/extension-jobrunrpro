@@ -20,8 +20,6 @@ import org.axonframework.common.transaction.TransactionManager;
 import org.axonframework.config.Configuration;
 import org.axonframework.config.ConfigurationScopeAwareProvider;
 import org.axonframework.deadline.DeadlineManager;
-import org.axonframework.eventhandling.EventBus;
-import org.axonframework.eventhandling.scheduling.EventScheduler;
 import org.axonframework.extensions.jobrunrpro.deadline.JobRunrProDeadlineManager;
 import org.axonframework.messaging.ScopeAwareProvider;
 import org.axonframework.serialization.Serializer;
