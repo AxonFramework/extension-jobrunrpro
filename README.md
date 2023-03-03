@@ -14,7 +14,7 @@ The framework provides sensible defaults for all of these components out of the 
 This set up helps you create a well structured application without having to bother with the infrastructure.
 The main focus can thus become your business functionality.
 
-This repository provides an extension to the Axon Framework: JobRunr Pro.
+This repository provides an extension to the Axon Framework: [JobRunr Pro](https://www.jobrunr.io/en/pricing/).
 It provides functionality to leverage [JobRunr](https://www.jobrunr.io/) to store and execute jobs. In particular and
 implementation for a deadline manager, that allows deleting jobs by their label.
 
