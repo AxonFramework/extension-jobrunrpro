@@ -72,7 +72,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Deploy to Sonatype
-        if: success() && ${{ matrix.deploy-enabled == 'true'}}
+        if: success() && ${{ matrix.deploy-enabled == true }}
         run: |
           ./mvnw -B -U -Dstyle.color=always deploy -DskipTests=true
         env:
