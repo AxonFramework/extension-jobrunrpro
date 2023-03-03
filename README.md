@@ -23,7 +23,7 @@ For more information on anything Axon, please visit our website, [http://axoniq.
 ## Getting started
 
 The [reference guide](https://docs.axoniq.io) contains a separate chapter for all the extensions.
-The jobRunr Pro extension description can be found [here](https://docs.axoniq.io/reference-guide/extensions/jobrunrpro).
+The JobRunr Pro extension description can be found [here](https://docs.axoniq.io/reference-guide/extensions/jobrunrpro).
 
 ## Receiving help
 
