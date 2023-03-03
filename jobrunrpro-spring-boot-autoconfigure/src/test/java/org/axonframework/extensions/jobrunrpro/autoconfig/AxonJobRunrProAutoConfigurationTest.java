@@ -34,7 +34,7 @@ import static org.mockito.Mockito.*;
 class AxonJobRunrProAutoConfigurationTest {
 
     @Test
-    void eventSchedulerAndDeadlineManagercreated() {
+    void jobRunrDeadlineManagerIsCreated() {
         new ApplicationContextRunner()
                 .withPropertyValues("axon.axonserver.enabled=false")
                 .withUserConfiguration(DefaultContext.class)
