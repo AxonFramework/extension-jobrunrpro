@@ -19,7 +19,7 @@
 
     <groupId>org.axonframework.extensions.jobrunrpro</groupId>
     <artifactId>axon-jobrunrpro-parent</artifactId>
-    <version>4.8.0</version>
+    <version>4.8.1-SNAPSHOT</version>
     <modules>
         <module>jobrunrpro</module>
         <module>jobrunrpro-spring-boot-autoconfigure</module>
@@ -469,7 +469,7 @@
         <connection>scm:git:git://github.com/AxonFramework/extension-jobrunrpro.git</connection>
         <developerConnection>scm:git:git@github.com:AxonFramework/extension-jobrunrpro.git</developerConnection>
         <url>https://github.com/AxonFramework/extension-jobrunrpro</url>
-        <tag>axon-jobrunrpro-4.8.0</tag>
+        <tag>HEAD</tag>
     </scm>
 
     <developers>
