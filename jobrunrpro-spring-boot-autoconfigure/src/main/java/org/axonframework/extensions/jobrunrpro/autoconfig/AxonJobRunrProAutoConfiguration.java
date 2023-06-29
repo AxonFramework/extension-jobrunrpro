@@ -38,7 +38,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.context.annotation.Bean;
 
 /**
- * Auto configuration class for the deadline manager using JobRunr Pro.
+ * Autoconfiguration class for the deadline manager using JobRunr Pro.
  *
  * @author Gerard Klijs
  * @since 4.8.0
@@ -46,8 +46,10 @@ import org.springframework.context.annotation.Bean;
 @AutoConfiguration
 @ConditionalOnBean(JobScheduler.class)
 @AutoConfigureBefore(AxonJobRunrAutoConfiguration.class)
-@AutoConfigureAfter(value = {AxonServerAutoConfiguration.class, AxonTracingAutoConfiguration.class},
-        name = {"org.jobrunr.spring.autoconfigure.JobRunrAutoConfiguration"})
+@AutoConfigureAfter(
+        value = {AxonServerAutoConfiguration.class, AxonTracingAutoConfiguration.class},
+        name = {"org.jobrunr.spring.autoconfigure.JobRunrAutoConfiguration"}
+)
 public class AxonJobRunrProAutoConfiguration {
 
     @Bean
@@ -58,7 +60,8 @@ public class AxonJobRunrProAutoConfiguration {
             Configuration configuration,
             @Qualifier("eventSerializer") Serializer serializer,
             TransactionManager transactionManager,
-            SpanFactory spanFactory) {
+            SpanFactory spanFactory
+    ) {
         ScopeAwareProvider scopeAwareProvider = new ConfigurationScopeAwareProvider(configuration);
         return JobRunrProDeadlineManager.proBuilder()
                                         .jobScheduler(jobScheduler)
