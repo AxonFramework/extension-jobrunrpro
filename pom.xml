@@ -292,22 +292,6 @@
                 </configuration>
             </plugin>
             <plugin>
-                <artifactId>maven-javadoc-plugin</artifactId>
-                <version>${maven-javadoc.version}</version>
-                <executions>
-                    <execution>
-                        <id>attach-javadoc</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>jar</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <doclint>none</doclint>
-                </configuration>
-            </plugin>
-            <plugin>
                 <artifactId>maven-source-plugin</artifactId>
                 <version>${maven-source.version}</version>
                 <executions>
@@ -356,7 +340,7 @@
                     <mavenExecutorId>forked-path</mavenExecutorId>
                     <localCheckout>true</localCheckout>
                     <pushChanges>false</pushChanges>
-                    <releaseProfiles>release-sign-artifacts</releaseProfiles>
+                    <releaseProfiles>javadoc,release-sign-artifacts</releaseProfiles>
                     <tagNameFormat>axon-jobrunrpro-@{project.version}</tagNameFormat>
                 </configuration>
             </plugin>
@@ -407,6 +391,30 @@
                                 </configuration>
                             </execution>
                         </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+        <profile>
+            <id>javadoc</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-javadoc-plugin</artifactId>
+                        <version>${maven-javadoc.version}</version>
+                        <executions>
+                            <execution>
+                                <id>attach-javadoc</id>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>jar</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                        <configuration>
+                            <doclint>none</doclint>
+                        </configuration>
                     </plugin>
                 </plugins>
             </build>
