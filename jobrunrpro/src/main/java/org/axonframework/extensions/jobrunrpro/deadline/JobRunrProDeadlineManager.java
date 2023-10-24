@@ -20,6 +20,8 @@ import org.axonframework.common.AxonConfigurationException;
 import org.axonframework.common.transaction.NoTransactionManager;
 import org.axonframework.common.transaction.TransactionManager;
 import org.axonframework.deadline.DeadlineManager;
+import org.axonframework.deadline.DeadlineManagerSpanFactory;
+import org.axonframework.deadline.DefaultDeadlineManagerSpanFactory;
 import org.axonframework.deadline.jobrunr.DeadlineDetails;
 import org.axonframework.deadline.jobrunr.JobRunrDeadlineManager;
 import org.axonframework.deadline.quartz.QuartzDeadlineManager;
@@ -51,7 +53,7 @@ public class JobRunrProDeadlineManager extends JobRunrDeadlineManager {
     protected final JobScheduler jobScheduler;
     private final StorageProvider storageProvider;
     private final Serializer serializer;
-    private final SpanFactory spanFactory;
+    private final DeadlineManagerSpanFactory spanFactory;
 
     /**
      * Instantiate a Builder to be able to create a {@link JobRunrProDeadlineManager}.
@@ -94,14 +96,13 @@ public class JobRunrProDeadlineManager extends JobRunrDeadlineManager {
 
     @Override
     public void cancelAll(@Nonnull String deadlineName) {
-        Span span = spanFactory.createInternalSpan(() -> getSpanClassName() + ".cancelAll(" + deadlineName + ")");
+        Span span = spanFactory.createCancelAllSpan(deadlineName);
         runOnPrepareCommitOrNow(span.wrapRunnable(() -> deleteAll(getLabel(deadlineName))));
     }
 
     @Override
     public void cancelAllWithinScope(@Nonnull String deadlineName, @Nonnull ScopeDescriptor scope) {
-        Span span = spanFactory.createInternalSpan(
-                () -> getSpanClassName() + ".cancelAllWithinScope(" + deadlineName + ")");
+        Span span = spanFactory.createCancelAllWithinScopeSpan(deadlineName, scope);
         runOnPrepareCommitOrNow(span.wrapRunnable(() -> deleteAll(getCombinedLabel(serializer, deadlineName, scope))));
     }
 
@@ -125,7 +126,9 @@ public class JobRunrProDeadlineManager extends JobRunrDeadlineManager {
         private ScopeAwareProvider scopeAwareProvider;
         private Serializer serializer;
         private TransactionManager transactionManager = NoTransactionManager.INSTANCE;
-        private SpanFactory spanFactory = NoOpSpanFactory.INSTANCE;
+        private DeadlineManagerSpanFactory spanFactory = DefaultDeadlineManagerSpanFactory.builder()
+                                                                                          .spanFactory(NoOpSpanFactory.INSTANCE)
+                                                                                          .build();
 
         /**
          * Sets the {@link JobScheduler} used for scheduling and triggering purposes of the deadlines.
@@ -201,8 +204,24 @@ public class JobRunrProDeadlineManager extends JobRunrDeadlineManager {
          *
          * @param spanFactory The {@link SpanFactory} implementation
          * @return The current Builder instance, for fluent interfacing.
+         * @deprecated Use {@link #spanFactory(DeadlineManagerSpanFactory)} instead as it provides more configuration options.
          */
+        @Deprecated
         public Builder spanFactory(@Nonnull SpanFactory spanFactory) {
+            assertNonNull(spanFactory, "SpanFactory may not be null");
+            this.spanFactory = DefaultDeadlineManagerSpanFactory.builder().spanFactory(spanFactory).build();
+            return this;
+        }
+
+        /**
+         * Sets the {@link DeadlineManagerSpanFactory} implementation to use for providing tracing capabilities.
+         * Defaults to a {@link DefaultDeadlineManagerSpanFactory} backed by a {@link NoOpSpanFactory} by default, which
+         * provides no tracing capabilities.
+         *
+         * @param spanFactory The {@link DeadlineManagerSpanFactory} implementation
+         * @return The current Builder instance, for fluent interfacing.
+         */
+        public Builder spanFactory(@Nonnull DeadlineManagerSpanFactory spanFactory) {
             assertNonNull(spanFactory, "SpanFactory may not be null");
             this.spanFactory = spanFactory;
             return this;
