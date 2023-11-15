@@ -41,7 +41,7 @@
         <jobrunr.version>6.0.0</jobrunr.version>
         <axon.version>4.9.0</axon.version>
         <jococo.version>0.8.8</jococo.version>
-        <testcontainers.version>1.19.1</testcontainers.version>
+        <testcontainers.version>1.19.2</testcontainers.version>
     </properties>
 
     <dependencies>
