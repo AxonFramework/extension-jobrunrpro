@@ -1,0 +1,14 @@
+name: jobrunrpro_extension_old_ref
+title: JobRunr Pro Extension Guide
+version: true
+prerelease: true
+start_page: ROOT:index.adoc
+
+asciidoc:
+  attributes:
+    component_description: The JobRunr Pro Extension guide from the former reference guide
+    type: guide
+    group: axon-framework
+
+nav:
+  - modules/nav.adoc
