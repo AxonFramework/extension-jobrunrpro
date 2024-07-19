@@ -1,7 +1,7 @@
 :navtitle: JobRunr Pro Extension
 = JobRunr Pro
 
-The purpose of this extension is to leverage some features only available in the Pro version of link:https://www.jobrunr.io/en/documentation/pro/[JobRunr,window=_blank,role=external]. Only the Pro version allows to search existing jobs by status and label. This is required for the deadline manager to implement the `cancelAll` methods. The xref:axon_framework_old_ref:deadlines:deadline-managers.adoc[deadline managers] section has more in depth information on deadline managers. Although jobs created with the non-pro `DeadlineManager` will be eligible to be canceled, this is only true when they were created with the `4.8` or later versions. Jobs created with the `4.7.x` version are missing the correct labels and will not be found when trying to cancel them.
+The purpose of this extension is to leverage some features only available in the Pro version of link:https://www.jobrunr.io/en/documentation/pro/[JobRunr,window=_blank,role=external]. Only the Pro version allows to search existing jobs by status and label. This is required for the deadline manager to implement the `cancelAll` methods. The xref:axon_framework_ref:deadlines:deadline-managers.adoc[deadline managers] section has more in depth information on deadline managers. Although jobs created with the non-pro `DeadlineManager` will be eligible to be canceled, this is only true when they were created with the `4.8` or later versions. Jobs created with the `4.7.x` version are missing the correct labels and will not be found when trying to cancel them.
 
 
 == Spring usage
