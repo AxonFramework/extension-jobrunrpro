@@ -53,7 +53,7 @@
         </sonar.coverage.jacoco.xmlReportPaths>
 
         <axon.version>4.10.0</axon.version>
-        <jobrunr.version>6.0.0</jobrunr.version>
+        <jobrunr.version>6.3.5</jobrunr.version>
 
         <spring.version>5.3.31</spring.version>
         <spring.boot.version>2.7.18</spring.boot.version>
