@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010-2023. Axon Framework
+ * Copyright (c) 2010-2024. Axon Framework
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -34,6 +34,7 @@ import org.junit.jupiter.api.extension.*;
 import org.mockito.*;
 import org.mockito.junit.jupiter.*;
 
+import java.time.Duration;
 import java.util.Objects;
 
 import static org.jobrunr.server.BackgroundJobServerConfiguration.usingStandardBackgroundJobServerConfiguration;
@@ -68,7 +69,9 @@ class JobrunrProDeadlineManagerIntegrationTest extends AbstractDeadlineManagerTe
         JobRunrPro.configure()
                   .useJobActivator(new SimpleActivator<>(spy(manager)))
                   .useStorageProvider(storageProvider)
-                  .useBackgroundJobServer(usingStandardBackgroundJobServerConfiguration().andPollIntervalInSeconds(5))
+                  .useBackgroundJobServer(
+                          usingStandardBackgroundJobServerConfiguration().andPollInterval(Duration.ofMillis(200))
+                  )
                   .initialize();
         backgroundJobServer = JobRunrPro.getBackgroundJobServer();
         return manager;
