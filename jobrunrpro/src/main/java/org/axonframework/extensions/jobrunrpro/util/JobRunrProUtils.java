@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010-2023. Axon Framework
+ * Copyright (c) 2010-2024. Axon Framework
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,7 +25,7 @@ import org.jobrunr.storage.StorageProvider;
 import java.util.List;
 
 import static org.jobrunr.storage.JobSearchRequestBuilder.aJobSearchRequest;
-import static org.jobrunr.storage.PageRequest.ascOnUpdatedAt;
+import static org.jobrunr.storage.Paging.OffsetBasedPage.ascOnUpdatedAt;
 
 /**
  * Utility methods specifically for JobRunr Pro

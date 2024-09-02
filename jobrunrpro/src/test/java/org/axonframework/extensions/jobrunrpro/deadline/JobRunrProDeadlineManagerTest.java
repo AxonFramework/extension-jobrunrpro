@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010-2023. Axon Framework
+ * Copyright (c) 2010-2024. Axon Framework
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,8 +24,8 @@ import org.axonframework.serialization.TestSerializer;
 import org.jobrunr.scheduling.JobScheduler;
 import org.jobrunr.storage.JobSearchRequest;
 import org.jobrunr.storage.Page;
-import org.jobrunr.storage.PageRequest;
 import org.jobrunr.storage.StorageProvider;
+import org.jobrunr.storage.navigation.PageRequest;
 import org.junit.jupiter.api.*;
 
 import static org.junit.jupiter.api.Assertions.*;
