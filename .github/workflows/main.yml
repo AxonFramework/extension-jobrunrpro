@@ -53,11 +53,15 @@ jobs:
         if: ${{ !matrix.sonar-enabled }}
         run: |
           ./mvnw -B -U -Dstyle.color=always clean verify
+        env:
+          JOBRUNR_PRO_LICENSE: ${{ secrets.JOB_RUNR_PRO_LICENSE }}
 
       - name: Build with Coverage reports
         if: matrix.sonar-enabled
         run: |
           ./mvnw -B -U -Dstyle.color=always -Dcoverage clean verify
+        env:
+          JOBRUNR_PRO_LICENSE: ${{ secrets.JOB_RUNR_PRO_LICENSE }}
 
       - name: Sonar Analysis
         if: matrix.sonar-enabled

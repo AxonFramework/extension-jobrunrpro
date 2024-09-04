@@ -32,7 +32,7 @@ jobs:
           server-username: MAVEN_USERNAME
           server-password: MAVEN_PASSWORD
 
-      - name: Set JobRunrPro credentials
+      - name: Set Maven server credentials
         uses: s4u/maven-settings-action@v3.0.0
         with:
           servers: |
@@ -46,11 +46,15 @@ jobs:
         if: ${{ !matrix.sonar-enabled }}
         run: |
           ./mvnw -B -U -Dstyle.color=always clean verify
+        env:
+          JOBRUNR_PRO_LICENSE: ${{ secrets.JOB_RUNR_PRO_LICENSE }}
 
       - name: Build with Coverage reports
         if: matrix.sonar-enabled
         run: |
           ./mvnw -B -U -Dstyle.color=always -Possrh -Dcoverage clean verify
+        env:
+          JOBRUNR_PRO_LICENSE: ${{ secrets.JOB_RUNR_PRO_LICENSE }}
 
       - name: Sonar Analysis
         if: ${{ success() && matrix.sonar-enabled && github.event.pull_request.head.repo.full_name == github.repository }}
