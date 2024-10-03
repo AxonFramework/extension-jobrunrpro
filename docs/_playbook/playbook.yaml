@@ -1,6 +1,6 @@
 site:
   title: JobRunr Pro Extension docs PREVIEW
-  start_page: jobrunrpro_extension_guide::index.adoc
+  start_page: jobrunr-pro-extension-reference::index.adoc
 
 content:
   sources:
