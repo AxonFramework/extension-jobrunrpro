@@ -4,7 +4,7 @@ This folder contains the docs related to the JobRunr Pro Extension for Axon Fram
 
 The following are the current documentation sources (folders):
 
-- `extension-guide` : [The JobRunr Pro Extension guide](https://docs.axoniq.io/jobrunrpro_extension_guide/main/index.html)
+- `extension-guide` : [The JobRunr Pro Extension guide](https://docs.axoniq.io/jobrunr-pro-extension-reference/main/index.html)
 
 ## Contributing to the docs.
 
