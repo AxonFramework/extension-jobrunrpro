@@ -1,12 +1,13 @@
 name: jobrunr-pro-extension-reference
 title: JobRunr Pro Extension Reference
-version: true
-prerelease: true
+version:
+  axon-jobrunrpro-(?<version>+({0..9}).+({0..9})).*: $<version>
+  main: development
 start_page: ROOT:index.adoc
 
 asciidoc:
   attributes:
-    component_description: Extensions adding JobRunr Pro integration for deadline management
+    component_description: Extension adding JobRunr Pro integration for deadline management
     type: extension-reference
     group: axon-framework
 
