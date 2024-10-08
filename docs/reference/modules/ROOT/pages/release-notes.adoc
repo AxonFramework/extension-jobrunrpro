@@ -1,0 +1,4 @@
+= Release Notes Jobrunr Pro Extension
+:navtitle: Release Notes
+
+You can find the release notes for the Jobrunr Pro Extension on the link:https://github.com/AxonFramework/extension-jobrunrpro/releases[GitHub releases page].
