@@ -1,4 +1,10 @@
 = Release Notes Jobrunr Pro Extension
 :navtitle: Release Notes
 
-You can find the release notes for the Jobrunr Pro Extension on the link:https://github.com/AxonFramework/extension-jobrunrpro/releases[GitHub releases page].
+You can find the release notes for the Jobrunr Pro Extension from version 4.10.0 onwards below. For earlier release, please go to the link:https://legacydocs.axoniq.io/reference-guide/release-notes/rn-extensions/rn-jobrunrpro[legacy documentation].
+
+== Release 4.10.0
+
+Upgrades the Jobrunr Pro Extension to be compatible with Axon Framework 4.10.0, and updates various dependencies.
+
+See the link:https://github.com/AxonFramework/extension-jobrunrpro/releases/tag/axon-jobrunrpro-4.10.0[GitHub release notes] for an exhaustive list of all changes.
