@@ -52,7 +52,7 @@ jobs:
       - name: Build with Coverage reports
         if: matrix.sonar-enabled
         run: |
-          ./mvnw -B -U -Dstyle.color=always -Possrh -Dcoverage clean verify
+          ./mvnw -B -U -Dstyle.color=always -Dcoverage clean verify
         env:
           JOBRUNR_PRO_LICENSE: ${{ secrets.JOB_RUNR_PRO_LICENSE }}
 
