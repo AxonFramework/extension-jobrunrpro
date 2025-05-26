@@ -69,12 +69,12 @@
         <commons-io.version>2.11.0</commons-io.version>
         <junit.jupiter.version>5.10.1</junit.jupiter.version>
         <mockito.version>4.11.0</mockito.version>
-
+        <!-- Build / Plugin -->
+        <central-publishing-maven-plugin.version>0.7.0</central-publishing-maven-plugin.version>
         <jacoco-maven.version>0.8.11</jacoco-maven.version>
         <maven-assembly.version>3.7.1</maven-assembly.version>
         <maven-clean.version>3.4.0</maven-clean.version>
         <maven-compiler.version>3.13.0</maven-compiler.version>
-        <maven-deploy.version>3.1.3</maven-deploy.version>
         <maven-enforcer.version>3.5.0</maven-enforcer.version>
         <maven-gpg.version>3.2.7</maven-gpg.version>
         <maven-install.version>3.1.3</maven-install.version>
@@ -291,23 +291,15 @@
                     </archive>
                 </configuration>
             </plugin>
-            <plugin>
-                <artifactId>maven-source-plugin</artifactId>
-                <version>${maven-source.version}</version>
-                <executions>
-                    <execution>
-                        <id>attach-sources</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>jar-no-fork</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
             <!-- deploy -->
             <plugin>
-                <artifactId>maven-deploy-plugin</artifactId>
-                <version>${maven-deploy.version}</version>
+                <groupId>org.sonatype.central</groupId>
+                <artifactId>central-publishing-maven-plugin</artifactId>
+                <version>${central-publishing-maven-plugin.version}</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <publishingServerId>central</publishingServerId>
+                </configuration>
             </plugin>
             <plugin>
                 <!-- just to make sure deployed artifacts are always built (and tested) using JDK 8+ -->
@@ -337,10 +329,14 @@
                 <artifactId>maven-release-plugin</artifactId>
                 <version>${maven-release.version}</version>
                 <configuration>
+                    <!-- prepare goal configuration -->
+                    <mavenExecutorId>forked-path</mavenExecutorId>
+                    <pushChanges>false</pushChanges>
+                    <autoVersionSubmodules>true</autoVersionSubmodules>
+                    <!-- perform goal configuration -->
                     <mavenExecutorId>forked-path</mavenExecutorId>
                     <localCheckout>true</localCheckout>
-                    <pushChanges>false</pushChanges>
-                    <releaseProfiles>javadoc,release-sign-artifacts</releaseProfiles>
+                    <releaseProfiles>javadoc,sources,sign</releaseProfiles>
                     <tagNameFormat>axon-jobrunrpro-@{project.version}</tagNameFormat>
                 </configuration>
             </plugin>
@@ -397,6 +393,37 @@
         </profile>
 
         <profile>
+            <id>java17-modules</id>
+            <activation>
+                <jdk>[17,)</jdk>
+            </activation>
+            <modules>
+                <module>jobrunrpro-spring-boot-3-integrationtests</module>
+            </modules>
+        </profile>
+
+        <profile>
+            <id>sources</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-source-plugin</artifactId>
+                        <version>${maven-source.version}</version>
+                        <executions>
+                            <execution>
+                                <id>attach-sources</id>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>jar-no-fork</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+        <profile>
             <id>javadoc</id>
             <build>
                 <plugins>
@@ -421,17 +448,7 @@
         </profile>
 
         <profile>
-            <id>java17-modules</id>
-            <activation>
-                <jdk>[17,)</jdk>
-            </activation>
-            <modules>
-                <module>jobrunrpro-spring-boot-3-integrationtests</module>
-            </modules>
-        </profile>
-
-        <profile>
-            <id>release-sign-artifacts</id>
+            <id>sign</id>
             <build>
                 <plugins>
                     <plugin>
@@ -452,36 +469,6 @@
             </build>
         </profile>
     </profiles>
-
-    <repositories>
-        <repository>
-            <id>sonatype</id>
-            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
-            <snapshots>
-                <enabled>true</enabled>
-                <updatePolicy>always</updatePolicy>
-                <checksumPolicy>fail</checksumPolicy>
-            </snapshots>
-        </repository>
-        <repository>
-            <id>JobRunrPro</id>
-            <url>https://repo.jobrunr.io/private-releases/</url>
-        </repository>
-    </repositories>
-
-    <!-- deploy and release configuration -->
-    <distributionManagement>
-        <snapshotRepository>
-            <id>sonatype</id>
-            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
-            <uniqueVersion>true</uniqueVersion>
-        </snapshotRepository>
-        <repository>
-            <id>sonatype</id>
-            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2</url>
-            <uniqueVersion>false</uniqueVersion>
-        </repository>
-    </distributionManagement>
 
     <scm>
         <connection>scm:git:git://github.com/AxonFramework/extension-jobrunrpro.git</connection>
