@@ -181,18 +181,8 @@
 
     <repositories>
         <repository>
-            <id>sonatype</id>
-            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
-            <snapshots>
-                <enabled>true</enabled>
-                <updatePolicy>always</updatePolicy>
-                <checksumPolicy>fail</checksumPolicy>
-            </snapshots>
-        </repository>
-        <repository>
             <id>JobRunrPro</id>
             <url>https://repo.jobrunr.io/private-releases/</url>
         </repository>
     </repositories>
-
 </project>
