@@ -12,12 +12,13 @@ For Spring usage, be sure to include the starters, both of JobRunr Pro and the e
 ======
 Aggregate::
 +
+--
 [source,java]
 ----
 @CommandHandler
 public void handle(SomeCommand command, @Autowired DeadlineManager deadlineManager) { ... }
 ----
-
+--
 Saga::
 +
 --
@@ -35,6 +36,7 @@ void setDeadlineManager(DeadlineManager deadlineManager) {
     this.deadlineManager = deadlineManager;
 }
 ----
+--
 ======
 
 == Non Spring usage
